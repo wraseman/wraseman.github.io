@@ -1,0 +1,140 @@
+<!doctype html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+</head>
+
+<title>Water treatment operations</title>
+
+<link rel="stylesheet" type="text/css" href="parasol.css">
+
+<script src="./lib/d3.v5.min.js"></script>
+<script src="../dist/parasol.standalone.js"></script>
+
+<body>
+  <h1>Optimization of water treatment operations for the Cache la Poudre River</h1>
+  <div style="width: 200px; float: left;">
+    <i>Clustering variables:</i> <br>
+    <input type="checkbox" id="obj_box" checked> Objectives <br>
+    <input type="checkbox" id="dec_box" checked> Decisions <br>
+    <button id="cluster_button">Perform clustering</button>
+  </div>
+  <div>
+    <i>Data to export:</i> <br>
+    <!-- <form onSubmit="export_selected_data(); return false;"> -->
+    <input type="radio" name="export_selection" value="brushed" checked> Brushed <br>
+    <input type="radio" name="export_selection" value="marked"> Marked <br>
+    <button id="export_button">Export data<br>
+    <!-- </form> -->
+  </div>
+  <h2> Objectives </h2>
+  <div id="p0" class="parcoords" style="height:200px; width:800px;">
+      <img src="arrow.jpg" alt="Arrow" width="50" height="200">
+   </div>
+  <h2> Decisions </h2>
+  <div id="p1" class="parcoords" style="height:200px; width:850px;"></div>
+  <div id="grid" style="width:100%;height:700px;" class="slickgrid-container"></div>
+</body>
+
+<script>
+// read in data and create visualization
+d3.csv('data/water-treatment.csv')
+.then(function(data) {
+
+  // bounds for decision variables
+  var min_alk = 0.0;
+  var max_alk = 120.0;
+  var min_pH = 6.0;
+  var max_pH = 9.5;
+  var min_DBPsf = 0.02;
+  var max_DBPsf = 0.75;
+
+  // specify layout
+  var axes_to_hide = {
+      0: ['alk_Q1', 'pH_Q1', 'DBPsf_Q1', 'alk_Q2', 'pH_Q2', 'DBPsf_Q2', 'alk_Q3', 'pH_Q3', 'DBPsf_Q3', 'alk_Q4', 'pH_Q4', 'DBPsf_Q4'],  // hidden from first plot
+      // 1: ['rel', 'crit_rel', 'num_leases', 'surplus']   // hidden from second plot
+      1: ['wc_freq_TTHM', 'wc_freq_HAA5', 'expect_solids', 'expect_lime', 'expect_co2']
+    }
+
+  // create Parasol object, add grid, link, and perform clustering
+  var ps = Parasol(data)('.parcoords')
+            .attachGrid({container: '#grid'})
+            .linked()
+            .hideAxes(axes_to_hide)
+            .cluster({k: 3, hidden: true})
+            .alpha(0.45)  // change transparency
+            .reorderable()  // make axes dynamically reorderable
+            // .flipAxes('rel. (-)')
+            // .flip('crit. rel. (-)')
+            .render()
+
+  // scale decisions appropriately
+  ps.charts[0].scale('wc_freq_TTHM', [0, 0.3])
+    .scale('wc_freq_HAA5', [0, 0.3])
+
+  // scale decisions appropriately
+  ps.charts[1].scale('alk_Q1', [min_alk, max_alk])
+    .scale('alk_Q2', [min_alk, max_alk])
+    .scale('alk_Q3', [min_alk, max_alk])
+    .scale('alk_Q4', [min_alk, max_alk])
+    .scale('pH_Q1', [min_pH, max_pH])
+    .scale('pH_Q2', [min_pH, max_pH])
+    .scale('pH_Q3', [min_pH, max_pH])
+    .scale('pH_Q4', [min_pH, max_pH])
+    .scale('pH_DBPsf', [min_DBPsf, max_DBPsf])
+    .scale('pH_DBPsf', [min_DBPsf, max_DBPsf])
+    .scale('pH_DBPsf', [min_DBPsf, max_DBPsf])
+    .scale('pH_DBPsf', [min_DBPsf, max_DBPsf])
+
+   // update clusters and slider text when slider changes
+   d3.select('#cluster_button').on('click', function() {
+     var cluster_vars = get_cluster_vars();  // get variables for clustering from checkboxes
+     ps.cluster({k: 3, vars: cluster_vars, hidden: true});
+   });
+
+   // export data
+   d3.select('#export_button').on('click', function() {
+       var selection = document.querySelector('input[name="export_selection"]:checked').value
+
+       if (selection === "brushed") {
+         ps.exportData(type=selection);
+       } else if (selection === "marked") {
+         ps.exportData(type=selection);
+       }
+   });
+});
+
+function get_cluster_vars() {
+  // create an array of variables that are checked for clustering
+  var checked_vars = [];
+  var checkbox_ids = ["#obj_box", "#dec_box"];
+  var obj_names = ["rel. (-)", "crit. rel. (-)", "leases (#)", "surplus (af)",
+  "dropped (af)", "cost ($)", "cost var. (-)", "dr. trans. ($)"];
+  var dec_names = ["rights (af)", "opt. low (af)", "opt. high (af)", "xi (-)",
+  "alpha 1-4 (-)", "beta 1-4 (-)", "alpha 5-12 (-)", "beta 5-12 (-)"];
+
+  // get whether each checkbox is checked, if so, add variables to cluster_vars
+  // include objectives, if checked
+  if (d3.select(checkbox_ids[0]).property("checked") === true) {
+    for (i = 0; i < obj_names.length; i++) {
+      checked_vars.push(obj_names[i]);
+    }
+  }
+  // include decisions, if checked
+  if (d3.select(checkbox_ids[1]).property("checked") === true) {
+    for (i = 0; i < dec_names.length; i++) {
+      checked_vars.push(dec_names[i]);
+    }
+  }
+
+  return checked_vars;
+}
+
+// // update clustering
+// function update_cluster_slider(nClust) {
+//   // adjust the text on the range slider
+//   d3.select("#nClust-value").text(nClust);
+//   d3.select("#nClust").property("value", nClust);
+// }
+
+</script>

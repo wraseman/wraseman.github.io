@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>William Raseman on William Raseman</title>
+    <link>https://wraseman.github.io/</link>
+    <description>Recent content in William Raseman on William Raseman</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Sun, 10 Jun 2018 00:00:00 -0600</lastBuildDate>
+    <atom:link href="/" rel="self" type="application/rss+xml" />
+
+    <item>
+      <title>William Raseman's Resume</title>
+      <link>https://wraseman.github.io/files/resume.pdf</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 -0700</pubDate>
+    </item>
+
+  </channel>
+</rss>
