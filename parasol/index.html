@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Parasol</title>
+    <title>Visualizations</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -37,53 +37,87 @@
   <div class="row">
     <div class="col-sm-4">
       <h3>About</h3>
-        <a href="https://github.com/ParasolJS/parasol-es">
+        <a href="https://github.com/ParasolJS/parasol-es" target="_blank">
           <img src="/img/parasol_logo.png" alt="parasol-logo" class ="img-thumbnail">
         </a>
         <h4>What is Parasol?</h4>
         <p>
-          Parasol is a JavaScript library for a JavaScript library for developing
+          <a href="https://github.com/ParasolJS/parasol-es" target="_blank">
+            Parasol
+          </a>
+          is a JavaScript library for a JavaScript library for developing
           parallel coordinates visualizations to enhance environmental decision making.
         </p>
         <h4>Features</h4>
         <p>
-          It features interactive linked plots, a data grid,
+          Interactive linked plots, a data grid,
           and an array of clutter reduction techniques allowing for efficient
           visualization of trade-offs in high-dimensional data.
           Parasol provides developers with a toolbox for creating their own custom,
-          interactive PC visualizations.
+          interactive parallel coordinates visualizations.
         </p>
     </div>
     <div class="col-sm-4">
       <h3>Multi-objective optimization</h3>
-      <a href="demo/water-treatment.html">
+      <a href="demo/water-treatment.html" target="_blank">
         <img src="/img/water-treatment.png" alt="water-treatment_image" class ="img-thumbnail">
       </a>
       <h4>Water treatment operations</h4>
       <p>
-        Add description of project
+        Optimization of water treatment operations for a utility facing
+        variable source water quality. This research was done in partnership with
+        the USEPA and Water Research Foundation on
+        <a href="http://www.waterrf.org/Pages/Projects.aspx?PID=4636" target="_blank">
+          WRF Project 4636
+        </a>: “An Integrated Modeling & Design Framework to Evaluate Adaption Strategies for Sustainable
+        Drinking Water Utility Management Under Drought and Climate Change”.
       </p>
-      <br></br>
-      <a href="demo/lrgv.html">
+      <a href="demo/lrgv.html" target="_blank">
         <img src="/img/water-resources.png" alt="water-resources_image" class ="img-thumbnail">
         <!-- source: https://www.theland.com.au/story/5640868/going-down-burrendong-dam-water-level-has-dropped-significantly/ -->
       </a>
       <h4>Water resources management</h4>
       <p>
-        Add description of LRGV problem
+        Optimization of the water portfolio of the Lower Rio Grande Valley (LRGV)
+        as formulated in Clarkin et al. (2018):
+        <a href="https://doi.org/10.1061/(ASCE)WR.1943-5452.0000940" target="_blank">
+          https://doi.org/10.1061/(ASCE)WR.1943-5452.0000940
+        </a>
+      </p>
+      <p>
+        In the LRGV case study, a hypothetical municipality attempts to manage
+        their water supply efficiently in the face of uncertain supply and demand
+        due to population growth, agricultural demand, and transboundary water
+        issues between the United States and Mexico. This municipality has three
+        instruments with which it develops its water supply planning portfolio:
+        permanent rights, spot market leases, and adaptive options contracts.
       </p>
     </div>
     <div class="col-sm-4">
       <h3>Additional examples</h3>
-      <a href="demo/paper-example-1.html">
-        <img src="/img/linked-w-brushes.png" alt="Parasol: linked plots with buttons for filtering and exporting data" class ="img-thumbnail">
+      <a href="demo/paper-example-1.html" target="_blank">
+        <img src="/img/linked-w-brushes.png"  alt="Parasol: linked plots with buttons for filtering and exporting data" class ="img-thumbnail">
       </a>
-      <!-- <a href="demo/paper-example-2.html">
-        <img src="/img/clustering-and-linked-grid.png" alt="Parasol: k-means clustering and linked grid" class ="img-thumbnail">
-      </a> -->
-      <a href="demo/paper-example-3.html">
+      <h4>Linking plots and filtering data</h4>
+      <p>
+        Parasol-based web application that demonstrates brushing across linked
+        parallel coordinates plots and how buttons can be used to modify a Parasol object,
+        ps, using the Parasol API. Parasol API: 1) ps.resetSelections() clears any brushes
+        on either plot; 2) ps.keepData() keeps any data within the brush extents from ps and removes
+        the rest; 3) ps.removeData() removes only the data within the brush extents; and 4) ps.exportData()
+        exports only the data within the brush extents.
+      </p>
+      <a href="demo/paper-example-3.html" target="_blank">
         <img src="/img/weighted-sum-and-bundling.png" alt="Parasol: weighted sum method and curve bundling" class ="img-thumbnail">
       </a>
+      <h4>Curve bundling and linked grid</h4>
+      <p>
+        Parasol-based web application that allows users to specify weights to
+        different metrics to calculate an aggregate score for each data point (i.e., car).
+        This is achieved using the ps.weightedSum() function of the Parasol API.
+        This example also shows how linking a data table with the plot allows users
+        to mark solutions of interest and how curve bundling can be used to reduce visual clutter.
+      </p>
     </div>
   </div>
 </div>
