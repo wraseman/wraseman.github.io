@@ -54,7 +54,7 @@
 
 <script>
 // read in data and create visualization
-d3.csv('data/water-treatment.csv')
+d3.csv('data/07-15-19_15-38-22.csv')
 .then(function(data) {
 
   // specify initial number of clusters (k)
@@ -85,6 +85,7 @@ d3.csv('data/water-treatment.csv')
             .cluster({k: k, vars: cluster_vars, hidden: false})
             .hideAxes(axes_to_hide)
             .alpha(0.15)  // change transparency
+            // .alpha(0.015)  // change transparency
             .reorderable()  // make axes dynamically reorderable
             .render()
 
